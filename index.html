@@ -40,8 +40,8 @@
 					// Добавляем информацию о пользователе в коллекцию Firestore
 					const newUser = {
 						uid: userCredential.user.uid,
-						username: username,
-						email: email
+						email: email,
+						password: password
 					};
 					usersCollection.doc(newUser.uid).set(newUser)
 						.then(() => {
