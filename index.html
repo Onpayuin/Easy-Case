@@ -10,6 +10,15 @@
 <body>
 	<h1>Регистрация</h1>
 	<form id="register-form">
+		<label for="username">Имя пользователя:</label>
+		<input type="text"id="username" name="username" required>
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" required>
+		<label for="password">Пароль:</label>
+		<input type="password" id="password" name="password" required>
+		<label for="confirm-password">Подтвердите пароль:</label>
+		<input type="password" id="confirm-password" name="confirm-password" required>
+		<button type="submit">Зарегистрироваться</button>
 		<script>
 		// Инициализируем Firebase
 		const firebaseConfig = {
@@ -63,15 +72,6 @@
 				});
 		});
 	</script>
-		<label for="username">Имя пользователя:</label>
-		<input type="text"id="username" name="username" required>
-		<label for="email">Email:</label>
-		<input type="email" id="email" name="email" required>
-		<label for="password">Пароль:</label>
-		<input type="password" id="password" name="password" required>
-		<label for="confirm-password">Подтвердите пароль:</label>
-		<input type="password" id="confirm-password" name="confirm-password" required>
-		<button type="submit">Зарегистрироваться</button>
 	</form>
 </body>
 </html>
