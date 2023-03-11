@@ -1,53 +1,55 @@
-/* Установка стилей для всего документа */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-/* Установка стилей для заголовка */
 h1 {
-  text-align: center;
-  color: #333;
+    text-align: center;
 }
 
-/* Установка стилей для формы */
 form {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 25px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
 }
 
-/* Установка стилей для меток и полей ввода */
 label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  margin-bottom: 20px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
-input[type="submit"] {
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+button[type="submit"] {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
-input[type="submit"]:hover {
-  background-color: #3e8e41;
+button[type="submit"]:hover {
+    background-color: #0062cc;
+}
+
+.alert {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ffc107;
+    background-color: #fff3cd;
+    color: #664d03;
+    border-radius: 3px;
 }
