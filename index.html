@@ -5,21 +5,7 @@
 	<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js"></script>
-	
-</head>
-<body>
-	<h1>Регистрация</h1>
-	<form id="register-form">
-		<label for="username">Имя пользователя:</label>
-		<input type="text"id="username" name="username" required>
-		<label for="email">Email:</label>
-		<input type="email" id="email" name="email" required>
-		<label for="password">Пароль:</label>
-		<input type="password" id="password" name="password" required>
-		<label for="confirm-password">Подтвердите пароль:</label>
-		<input type="password" id="confirm-password" name="confirm-password" required>
-		<button type="submit">Зарегистрироваться</button>
-		<script>
+	<script>
 		// Инициализируем Firebase
 		const firebaseConfig = {
 			apiKey: "AIzaSyAmkqn0I7D04JQShzhuO0E7Lvsx7TBAas4",
@@ -72,6 +58,20 @@
 				});
 		});
 	</script>
+	
+</head>
+<body>
+	<h1>Регистрация</h1>
+	<form id="register-form">
+		<label for="username">Имя пользователя:</label>
+		<input type="text"id="username" name="username" required>
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" required>
+		<label for="password">Пароль:</label>
+		<input type="password" id="password" name="password" required>
+		<label for="confirm-password">Подтвердите пароль:</label>
+		<input type="password" id="confirm-password" name="confirm-password" required>
+		<button type="submit">Зарегистрироваться</button>
 	</form>
 </body>
 </html>
