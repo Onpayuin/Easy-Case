@@ -3,22 +3,61 @@
   <head>
     <title>Регистрация</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-      <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-auth.js"></script>
-      <script>
-      // Код Firebase, скопированный из консоли Firebase
-      const firebaseConfig = {
-        apiKey: "AIzaSyAmkqn0I7D04JQShzhuO0E7Lvsx7TBAas4",
-        authDomain: "casebase-19dd4.firebaseapp.com",
-        projectId: "casebase-19dd4",
-        storageBucket: "casebase-19dd4.appspot.com",
-        messagingSenderId: "410878781847",
-        appId: "1:410878781847:web:1c21e5dbd742dfc732bcd2",
-        measurementId: "G-JF29S869TG"
-        };
-            // Инициализируем Firebase
-    firebase.initializeApp(firebaseConfig);
-  </script>
+<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
+	<script>
+		// Инициализируем Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyAmkqn0I7D04JQShzhuO0E7Lvsx7TBAas4",
+  authDomain: "casebase-19dd4.firebaseapp.com",
+  projectId: "casebase-19dd4",
+  storageBucket: "casebase-19dd4.appspot.com",
+  messagingSenderId: "410878781847",
+  appId: "1:410878781847:web:1c21e5dbd742dfc732bcd2",
+  measurementId: "G-JF29S869TG"
+};
+		firebase.initializeApp(firebaseConfig);
+
+		// Получаем ссылку на коллекцию пользователей
+		const usersCollection = firebase.firestore().collection('users');
+
+		// Обрабатываем данные формы регистрации
+		const registerForm = document.querySelector('#register-form');
+		registerForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const username = registerForm['username'].value;
+			const email = registerForm['email'].value;
+			const password = registerForm['password'].value;
+			const confirmPassword = registerForm['confirm-password'].value;
+
+			if (password !== confirmPassword) {
+				alert("Пароли не совпадают");
+				return;
+			}
+
+			// Создаем нового пользователя
+			firebase.auth().createUserWithEmailAndPassword(email, password)
+				.then((userCredential) => {
+					// Добавляем информацию о пользователе в коллекцию Firestore
+					const newUser = {
+						uid: userCredential.user.uid,
+						username: username,
+						email: email
+					};
+					usersCollection.doc(newUser.uid).set(newUser)
+						.then(() => {
+							alert("Пользователь зарегистрирован успешно");
+							registerForm.reset();
+						})
+						.catch((error) => {
+							alert("Ошибка: " + error.message);
+						});
+				})
+				.catch((error) => {
+					alert("Ошибка: " + error.message);
+				});
+		});
+	</script>
   </head>
   <body>
     <h1>Регистрация</h1>
