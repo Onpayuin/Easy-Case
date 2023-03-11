@@ -3,11 +3,12 @@
 <head>
 	<title>Регистрация</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js"></script>
-	<script>
-		// Инициализируем Firebase
+		<script type="module">
+		import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js';
+		import { getAuth } from 'https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js';
+		import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore.js';
+		
+		// Конфигурация Firebase
 		const firebaseConfig = {
 			apiKey: "<AIzaSyAmkqn0I7D04JQShzhuO0E7Lvsx7TBAas4>",
 			authDomain: "<casebase-19dd4.firebaseapp.com>",
@@ -17,45 +18,50 @@
 			appId: "<1:410878781847:web:1c21e5dbd742dfc732bcd2>",
 			measurementId: "<G-JF29S869TG>"
 		};
-		firebase.initializeApp(firebaseConfig);
 
-		// Получаем ссылку на коллекцию пользователей
-		const usersCollection = firebase.firestore().collection('users');
+		// Инициализация Firebase
+		const app = initializeApp(firebaseConfig);
+		const auth = getAuth(app);
+		const db = getFirestore(app);
 
-		// Обрабатываем данные формы регистрации
-		const registerForm = document.querySelector('#register-form');
+		// Регистрация пользователя
+		const registerForm = document.getElementById('register-form');
 		registerForm.addEventListener('submit', (e) => {
 			e.preventDefault();
-			const username = registerForm['username'].value;
-			const email = registerForm['email'].value;
-			const password = registerForm['password'].value;
-			const confirmPassword = registerForm['confirm-password'].value;
-
+			const username = document.getElementById('username').value;
+			const email = document.getElementById('email').value;
+			const password = document.getElementById('password').value;
+			const confirmPassword = document.getElementById('confirm-password').value;
+			
+			// Проверка совпадения паролей
 			if (password !== confirmPassword) {
-				alert("Пароли не совпадают");
+				alert('Пароли не совпадают!');
 				return;
 			}
 
-			// Создаем нового пользователя
-			firebase.auth().createUserWithEmailAndPassword(email, password)
+			// Создание пользователя в Firebase
+			auth.createUserWithEmailAndPassword(email, password)
 				.then((userCredential) => {
-					// Добавляем информацию о пользователе в коллекцию Firestore
-					const newUser = {
-						uid: userCredential.user.uid,
+					const user = userCredential.user;
+					console.log(`Пользователь ${user.uid} зарегистрирован!`);
+
+					// Добавление информации о пользователе в Firestore
+					db.collection('users').doc(user.uid).set({
+						username: username,
 						email: email,
-						password: password
-					};
-					usersCollection.doc(newUser.uid).set(newUser)
-						.then(() => {
-							alert("Пользователь зарегистрирован успешно");
-							registerForm.reset();
-						})
-						.catch((error) => {
-							alert("Ошибка: " + error.message);
-						});
+						createdAt: new Date(),
+					})
+					.then(() => {
+						console.log(`Информация о пользователе ${user.uid} добавлена в Firestore!`);
+						window.location.href = 'dashboard.html';
+					})
+					.catch((error) => {
+						console.error(`Ошибка при добавлении информации о пользователе ${user.uid} в Firestore:`, error);
+					});
 				})
 				.catch((error) => {
-					alert("Ошибка: " + error.message);
+					console.error(`Ошибка при регистрации пользователя:`, error);
+					alert(`Ошибка при регистрации пользователя: ${error.message}`);
 				});
 		});
 	</script>
